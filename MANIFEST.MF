@@ -1,0 +1,2 @@
+Manifest-Version: 1.0
+Class-Path: iConomy.jar DynamicMarket/sqlitejdbc-v056.jar DynamicMarket/mysql-connector-java-5.1.15-bin.jar
