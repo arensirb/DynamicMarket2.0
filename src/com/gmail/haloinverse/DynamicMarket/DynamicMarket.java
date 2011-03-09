@@ -13,6 +13,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.Server;
 import org.bukkit.event.Event;
 import org.bukkit.event.Event.Priority;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -79,6 +80,15 @@ public class DynamicMarket extends JavaPlugin
 	  	version = desc.getVersion();
 	  	
 	  	PluginManager pm = getServer().getPluginManager();
+	  	if(pm.getPlugin("iConomy").isEnabled() && getiConomy() == null) {
+	  		Plugin iConomy = pm.getPlugin("iConomy");
+	  		iConomyData();	
+	  		DynamicMarket.setiConomy((iConomy)iConomy);
+	  	}
+	  	if(pm.getPlugin("Permissions").isEnabled() && getPermissions() == null) {
+	  		DynamicMarket.setPermissions((Permissions)Permissions);
+    		System.out.println("[DynamicMarket] Successfully linked with Permissions.");	  		
+	  	}
 	  	
 	  	pluginListener = new iPluginListener();
 	  	pm.registerEvent(Event.Type.PLUGIN_ENABLE, pluginListener, Priority.Monitor, this);
