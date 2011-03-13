@@ -2,6 +2,7 @@ package com.gmail.haloinverse.DynamicMarket;
 
 import com.nijiko.coelho.iConomy.iConomy;
 import java.lang.Math;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 //import java.sql.ResultSet;
 
@@ -568,14 +569,14 @@ public class MarketItem extends ItemClump {
 			return (numTerms * priceCeil);
 		
 		// Split calculation if highStockPrice < priceFloor (Some below floor)
-		if (highStockPrice < priceFloor)
+		if (highStockPrice <= priceFloor)
 		{
 			fixedStockLimit = (int)Math.round(Math.floor(stockAtPrice(priceFloor)));
 			return (((highStock - fixedStockLimit) * priceFloor) + getBatchPrice(lowStock, fixedStockLimit));
 		}
 		
 		// Split calculation if lowStockPrice > priceCeil (Some above ceiling)
-		if (lowStockPrice > priceCeil)
+		if (lowStockPrice >= priceCeil)
 		{
 			fixedStockLimit = (int)Math.round(Math.ceil(stockAtPrice(priceCeil)));
 			return (((fixedStockLimit - lowStock) * priceCeil) + getBatchPrice(fixedStockLimit, highStock));
@@ -598,7 +599,8 @@ public class MarketItem extends ItemClump {
 	public double getSellPrice(int numBundles)
 	{
 		// Return the selling price of the given number of bundles.
-		return deductTax(getBatchPrice(stock + numBundles, stock + 1));
+		DecimalFormat df = new DecimalFormat("#.##");
+		return Double.valueOf(df.format((deductTax(getBatchPrice(stock + numBundles, stock + 1)))));
 	}
 	
 	private double deductTax(double basePrice)

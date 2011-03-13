@@ -23,7 +23,7 @@ public class DynamicMarket extends JavaPlugin
 	public static final Logger log = Logger.getLogger("Minecraft");
  
 	public static String name; // = "SimpleMarket";
-	public String codename = "Lynnda";
+	public String codename = "Marcus";
 	public String version; // = "0.4a";
  
 	public iListen playerListener = new iListen(this);

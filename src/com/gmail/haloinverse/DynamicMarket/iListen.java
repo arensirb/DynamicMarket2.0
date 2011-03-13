@@ -7,6 +7,8 @@ import com.gmail.haloinverse.DynamicMarket.DynamicMarket.EconType;
 import com.nijikokun.bukkit.Permissions.Permissions;
 import com.nijiko.coelho.iConomy.iConomy;
 import com.nijiko.coelho.iConomy.system.Account;
+
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 //import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -439,7 +441,8 @@ public class iListen extends PlayerListener
 		{
 
 			if (plugin.econType == EconType.ICONOMY4) {
-				return iConomy.getBank().getAccount(name).getBalance();
+				DecimalFormat df = new DecimalFormat("#.##");
+				return Double.valueOf(df.format(iConomy.getBank().getAccount(name).getBalance()));
 			}
 		}
 		return 0;
@@ -1016,7 +1019,7 @@ public class iListen extends PlayerListener
 		
 			if ((Misc.isEither(subCommand, "add", "-a")))
 			{
-				if(args.length > 2) {
+				if(args.length >= 2) {
 				// /shop add [id](:count) [buy] [sell] <tagList>
 				if (!(hasPermission(sender, "items.add"))) {
 					message.send("{ERR}You do not have permission to add items to the shop.");
