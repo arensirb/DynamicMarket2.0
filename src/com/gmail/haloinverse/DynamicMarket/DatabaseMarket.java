@@ -45,8 +45,8 @@ public class DatabaseMarket extends DatabaseCore
 				myQuery.executeUpdate();		
 			}
 			
-
 		}
+		myQuery.close();
 	}
 	
 	protected void checkNewFields()
@@ -64,10 +64,13 @@ public class DatabaseMarket extends DatabaseCore
 	protected boolean createTable(String shopLabel)
 	{
 		SQLHandler myQuery = new SQLHandler(this);
-		if (!myQuery.checkTable(tableName))
+		if (!myQuery.checkTable(tableName)) {
+			myQuery.close();
 			createTable();
-		else
+		} else {
+			myQuery.close();
 			return false;
+		}
 		return add(new MarketItem("-1,-1 n:Default", null, this, shopLabel));
 	}
 	
@@ -307,12 +310,16 @@ public class DatabaseMarket extends DatabaseCore
 		
 		try{
 			if(myQuery.rs != null) 
-				if (myQuery.rs.next())
-				return true;
+				if (myQuery.rs.next()) {
+					myQuery.close();
+					return true;
+				}
 		} catch (SQLException ex) {
+			myQuery.close();
 			logSevereException("Error retrieving shop item data with " + dbTypeString(), ex);
 			return false;
 		}
+		myQuery.close();
 		return false;
 	}
 	public MarketItem data(ItemClump thisItem, String shopLabel) {
@@ -377,6 +384,7 @@ public class DatabaseMarket extends DatabaseCore
 		} catch (SQLException ex) {
 			logSevereException("Error retrieving shop item data with " + dbTypeString(), ex);
 		}
+		myQuery.close();
 		
 		return returnVal;
 	}
@@ -568,12 +576,14 @@ public class DatabaseMarket extends DatabaseCore
 					newQuery.inputList.add(restocked.subType);
 			  		newQuery.inputList.add(shopLabel);
 					newQuery.prepareStatement("UPDATE " + tableName + "SET stock = ? WHERE (item = ? AND subtype = ? AND shoplabel = ?) LIMIT 1");
+					newQuery.close();
 				
 				}
 			} catch (SQLException ex) {
 				logSevereException("Error retrieving item name with " + dbTypeString(), ex);
 			}
-		
+
+		myQuery.close();
 		return false;
 	}
 	public boolean remove(ItemClump removed, String shopLabel) {

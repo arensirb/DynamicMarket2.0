@@ -1,6 +1,6 @@
 name: DynamicMarket
 main: com.gmail.haloinverse.DynamicMarket.DynamicMarket
-version: 0.5.beta1
+version: 0.5.beta2
 author: HaloInverse(fork by arensirb)
 description: >
              A shop plugin building towards an interesting and flexible market system.
